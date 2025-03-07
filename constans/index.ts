@@ -90,3 +90,154 @@ export const categories: { title: string; href: string; description: string }[] 
     description: "Sıvı ve gaz kontrolü için vana ve rekor çeşitleri.",
   }
 ];
+
+export interface CarouselType{
+  id:number;
+  image:string;
+}
+
+export const CarouselList: CarouselType[] = [
+  {
+    id: 1,
+    image: "/slider/best.png"
+  },
+  {
+    id: 2,
+    image: "/slider/emes.png"
+  },
+  {
+    id: 3,
+    image: "/slider/fag.png"
+  },
+  {
+    id: 4,
+    image: "/slider/iscar.png"
+  },
+  {
+    id: 5,
+    image: "/slider/karbosan.png"
+  },
+  {
+    id: 6,
+    image: "/slider/korloy.png"
+  },
+  {
+    id: 7,
+    image: "/slider/loctite.png"
+  },
+  {
+    id: 8,
+    image: "/slider/skf.png"
+  }, 
+  {
+    id: 9,
+    image: "/slider/nsk.png"
+  },
+  {
+    id: 10,
+    image: "/slider/oerlikon.png"
+  },
+  {
+    id: 11,
+    image: "/slider/osaka.png"
+  },
+  {
+    id: 12,
+    image: "/slider/petrolofisi.png"
+  },
+  {
+    id: 13,
+    image: "/slider/pmi.png"
+  }, 
+  {
+    id: 14,
+    image: "/slider/polisan.png"
+  },
+  {
+    id: 15,
+    image: "/slider/shell.png"
+  },
+]
+
+export interface ProductType{
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+};
+
+export const products: ProductType[] = [
+  {
+    id: 1,
+    title: '1100-XL-KRR-B-2C-L285/70-OSE',
+
+    description: 'Radial insert ball bearing',
+    image: '/products/rulman1.png',
+  },
+  {
+    id: 2,
+    title: '11204-TVH',
+    description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
+    image: '/products/rulman2.png',
+  },
+  {
+    id: 3,
+    title: '11205-TVH',
+    description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
+    image: '/products/rulman3.png',
+  },
+  {
+    id: 4,
+    title: '11206-TVH',
+    description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
+    image: '/products/rulman4.png',
+  },
+  {
+    id: 5,
+    title: '11207-TVH',
+    description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
+    image: '/products/rulman5.png',
+  },
+  {
+    id: 6,
+    title: '11208-TVH',
+    description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
+    image: '/products/rulman6.png',
+  },
+  {
+    id: 7,
+    title: '11209-TVH',
+    description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
+    image: '/products/rulman7.png',
+  },
+  {
+    id: 8,
+    title: '11210-TVH',
+    description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
+    image: '/products/rulman8.png',
+  },
+  {
+    id: 9,
+    title: 'Product Nine',
+    description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
+    image: '/products/rulman9.png',
+  },
+  {
+    id: 10,
+    title: 'Product Ten',
+    description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
+    image: '/products/rulman10.png',
+  },
+  {
+    id: 11,
+    title: 'Product Eleven',
+    description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
+    image: '/products/rulman11.png',
+  },
+  {
+    id: 12,
+    title: 'Product Twelve',
+    description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
+    image: '/products/rulman12.png',
+  },
+];

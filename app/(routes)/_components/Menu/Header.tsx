@@ -1,20 +1,33 @@
+'use client'
 import { ModeToggle } from "@/components/ModeToggle";
 import { Input } from "@/components/ui/input";
 import { Heart, Search, UserIcon } from "lucide-react";
 import { Anton } from "next/font/google";
-import React from "react";
+import React, { useState } from "react";
 import NavMenu from "./NavMenu";
 import { Button } from "@/components/ui/button";
 import MobileMenu from "./MobileMenu";
 import CartMenu from "./Cart";
 import Link from "next/link";
 import Image from 'next/image'
+import { useRouter } from "next/navigation";
+
 const anton = Anton({
   subsets: ["latin"], // Latin karakter setini ekler
   weight: "400", // Anton'un sadece 400 ağırlığı var
   display: "swap", // CLS (Cumulative Layout Shift) hatalarını önler
 });
 const Header = () => {
+  const router = useRouter();
+  const [query, setQuery] = useState('');
+   
+  const handleSearch =()=>{
+    if(query.trim()){
+        router.push(`/search?query=${encodeURIComponent(query)}`)
+
+    }
+}
+
   return (
     <div className="mx-auto bg-white dark:bg-mycolor1 shadow-md">
       <div className="container flex flex-row items-center justify-between p-5">
@@ -31,8 +44,8 @@ const Header = () => {
           </h2>
         </div>
         <div className="hidden md:flex relative md:min-w-96 lg:w-1/2">
-          <Input className="w-full border-2" />
-          <Button variant="link" className="absolute right-1">
+          <Input className="w-full border-2" onChange={(e) => setQuery(e.target.value)} />
+          <Button onClick={handleSearch} variant="link" className="absolute right-1">
             <Search/>
           </Button>
         </div>

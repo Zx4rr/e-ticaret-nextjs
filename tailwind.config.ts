@@ -41,6 +41,7 @@ export default {
 				mycolor24 : "#1E1E24",
 				mycolor25 : "#F8F9FA",
 				mycolor26 : "#fbc439",
+				mycolor27 : "#251a58",
 
   			card: {
   				DEFAULT: 'hsl(var(--card))',

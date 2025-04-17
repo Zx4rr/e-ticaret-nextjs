@@ -1,17 +1,15 @@
 'use client'
 
-import React, { useState, useEffect, useMemo, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { useFavorites } from '@/app/context/FavoritesContext'
-import { Heart, Star, Package, ChevronRight, ZoomIn, MessageCircle } from 'lucide-react'
+import { Heart, Star, ChevronRight, ZoomIn, MessageCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import { ReviewForm } from '@/components/ReviewForm'
-import { rulmanProducts as dummyProduct } from "@/constans"
-import { ProductType } from '@/constans'
 
 // Ürün tipi tanımı
 interface Specification {

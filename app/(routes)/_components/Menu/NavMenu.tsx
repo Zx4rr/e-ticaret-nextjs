@@ -199,7 +199,7 @@ const ListItem = React.forwardRef<
       className="list-none"
     >
       <NavigationMenuLink asChild>
-        <motion.a
+        <a
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-xl p-3 leading-none no-underline outline-none transition-colors",
@@ -207,8 +207,6 @@ const ListItem = React.forwardRef<
             "focus:bg-gray-100 dark:focus:bg-gray-700",
             className
           )}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
           {...props}
         >
           <div className="text-sm font-medium leading-none text-gray-900 dark:text-white">
@@ -217,7 +215,7 @@ const ListItem = React.forwardRef<
           <p className="line-clamp-2 text-sm leading-snug text-gray-500 dark:text-gray-400">
             {children}
           </p>
-        </motion.a>
+        </a>
       </NavigationMenuLink>
     </motion.li>
   )

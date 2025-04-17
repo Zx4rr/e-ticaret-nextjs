@@ -40,25 +40,6 @@ const NavMenu = () => {
     }
   };
 
-  const hoverVariants = {
-    initial: { 
-      scale: 1,
-      background: "linear-gradient(to right, transparent, transparent)",
-      borderColor: "rgb(229, 231, 235)",
-      boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)"
-    },
-    hover: { 
-      scale: 1.02,
-      background: "linear-gradient(to right, rgba(59, 130, 246, 0.1), rgba(147, 197, 253, 0.1))",
-      borderColor: "rgb(59, 130, 246)",
-      boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-      transition: { 
-        duration: 0.3,
-        ease: "easeInOut"
-      }
-    }
-  };
-
   return (
     <motion.div 
       variants={menuVariants}

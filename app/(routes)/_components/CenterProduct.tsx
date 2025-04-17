@@ -3,7 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 import CountUp from 'react-countup'
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const CenterProductPage = () => {
   const router = useRouter();

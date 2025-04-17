@@ -6,8 +6,6 @@ import { useFavorites } from '@/app/context/FavoritesContext'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { 
-  User, 
-  Heart, 
   LogOut, 
   Edit2, 
   Save, 
@@ -15,18 +13,14 @@ import {
   MapPin,
   Mail,
   Phone,
-  Palette,
-  Bell,
-  Eye,
-  EyeOff,
-  Trash2
+  Trash2,
+  Heart
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Skeleton } from '@/components/ui/skeleton'
-import { ModeToggle } from '@/components/ModeToggle'
 import Image from 'next/image'
 
 // Simulated products data - in a real app, this would come from an API
@@ -77,27 +71,74 @@ export default function ProfilePage() {
     address: ''
   })
 
-  // Customization preferences
+  // Customization preferences with default values
   const [preferences, setPreferences] = useState({
     notifications: true,
     emailUpdates: false,
-    showAddress: true
+    showAddress: true,
+    theme: 'system',
+    fontSize: 'medium',
+    primaryColor: 'blue'
   })
+
+  // Color theme options
+  const colorOptions = [
+    { id: 'blue', name: 'Mavi', class: 'bg-blue-500' },
+    { id: 'green', name: 'Yeşil', class: 'bg-green-500' },
+    { id: 'purple', name: 'Mor', class: 'bg-purple-500' },
+    { id: 'red', name: 'Kırmızı', class: 'bg-red-500' },
+    { id: 'orange', name: 'Turuncu', class: 'bg-orange-500' }
+  ]
+
+  // Font size options
+  const fontSizeOptions = [
+    { id: 'small', name: 'Küçük', class: 'text-sm' },
+    { id: 'medium', name: 'Orta', class: 'text-base' },
+    { id: 'large', name: 'Büyük', class: 'text-lg' }
+  ]
 
   // Load user data on component mount
   useEffect(() => {
     if (user) {
-      setFormData({
+      // Önce basic user info ile başla
+      const baseUserData = {
         name: user.name || '',
         email: user.email || '',
-        phone: '0555 123 4567', // Example data - in a real app, this would come from the user object
-        address: 'İstanbul, Türkiye' // Example data
-      })
+        phone: '0555 123 4567', // Default data
+        address: 'İstanbul, Türkiye' // Default data
+      };
+      
+      // Sonra kaydedilmiş localStorage bilgilerini oku
+      try {
+        const savedUserData = JSON.parse(localStorage.getItem('userData') || '{}');
+        
+        // Kaydedilmiş bilgileri mevcut verilerle birleştir
+        const mergedData = {
+          ...baseUserData,
+          ...savedUserData
+        };
+        
+        setFormData(mergedData);
+      } catch (error) {
+        console.error('Error loading saved user data:', error);
+        setFormData(baseUserData);
+      }
+      
+      // Aynı şekilde tercihleri de yükle
+      try {
+        const savedPreferences = JSON.parse(localStorage.getItem('userPreferences') || '{}');
+        setPreferences(prev => ({
+          ...prev,
+          ...savedPreferences
+        }));
+      } catch (error) {
+        console.error('Error loading saved preferences:', error);
+      }
       
       // Simulate loading
       setTimeout(() => {
         setIsLoading(false)
-      }, 1000)
+      }, 500)
     }
   }, [user])
 
@@ -108,26 +149,74 @@ export default function ProfilePage() {
       ...prev,
       [name]: value
     }))
+
+    // Gerçek zamanlı kaydet
+    if (name === 'name' || name === 'phone' || name === 'email' || name === 'address') {
+      // Değişikliği kullanıcıya bildir
+      toast.success(`${name.charAt(0).toUpperCase() + name.slice(1)} bilginiz güncellendi`)
+      
+      // Local storage'a kaydet (gerçek uygulamada API'ye gönderilir)
+      const savedUserData = JSON.parse(localStorage.getItem('userData') || '{}')
+      localStorage.setItem('userData', JSON.stringify({
+        ...savedUserData,
+        [name]: value
+      }))
+    }
+  }
+
+  // Handle preference changes
+  const handlePreferenceChange = (key: string, value: unknown) => {
+    setPreferences(prev => ({
+      ...prev,
+      [key]: value
+    }))
+    
+    // Gerçek zamanlı bildirim
+    toast.success(`${key} tercihiniz güncellendi`)
+    
+    // Local storage'a kaydet (gerçek uygulamada API'ye gönderilir)
+    const savedPreferences = JSON.parse(localStorage.getItem('userPreferences') || '{}')
+    localStorage.setItem('userPreferences', JSON.stringify({
+      ...savedPreferences,
+      [key]: value
+    }))
+  }
+
+  // Get background gradient based on selected color
+  const getGradientStyle = () => {
+    switch(preferences.primaryColor) {
+      case 'green':
+        return 'from-green-600 to-green-400 dark:from-green-800 dark:to-green-600'
+      case 'purple':
+        return 'from-purple-600 to-purple-400 dark:from-purple-800 dark:to-purple-600'
+      case 'red':
+        return 'from-red-600 to-red-400 dark:from-red-800 dark:to-red-600'
+      case 'orange':
+        return 'from-orange-600 to-orange-400 dark:from-orange-800 dark:to-orange-600'
+      default:
+        return 'from-blue-600 to-blue-400 dark:from-blue-800 dark:to-blue-600'
+    }
+  }
+
+  // Get font size class based on preference
+  const getFontSizeClass = () => {
+    switch(preferences.fontSize) {
+      case 'small': return 'text-sm'
+      case 'large': return 'text-lg'
+      default: return 'text-base'
+    }
   }
 
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Simulate saving profile
-    setTimeout(() => {
-      setIsEditing(false)
-      toast.success('Profil bilgileriniz başarıyla güncellendi')
-    }, 500)
-  }
-
-  // Handle preference toggles
-  const togglePreference = (key: keyof typeof preferences) => {
-    setPreferences(prev => ({
-      ...prev,
-      [key]: typeof prev[key] === 'boolean' ? !prev[key] : prev[key]
-    }))
-    toast.success('Tercihleriniz güncellendi')
+    // Tüm profil bilgilerini birlikte kaydet
+    localStorage.setItem('userData', JSON.stringify(formData))
+    
+    // UI güncellemesi
+    setIsEditing(false)
+    toast.success('Tüm profil bilgileriniz kaydedildi')
   }
 
   // Handle logout
@@ -184,7 +273,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div className={`min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 ${getFontSizeClass()}`}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           variants={containerVariants}
@@ -193,17 +282,17 @@ export default function ProfilePage() {
           className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden"
         >
           {/* Profile Header */}
-          <div className="relative bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-800 dark:to-blue-600 p-8">
+          <div className={`relative bg-gradient-to-r ${getGradientStyle()} p-8`}>
             <div className="absolute inset-0 bg-opacity-20 bg-black" />
             <div className="relative flex flex-col md:flex-row items-center gap-6">
               <motion.div 
                 variants={itemVariants}
-                className="w-24 h-24 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center text-3xl font-bold text-blue-600 dark:text-blue-400 shadow-lg"
+                className={`w-24 h-24 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center text-3xl font-bold text-${preferences.primaryColor}-600 dark:text-${preferences.primaryColor}-400 shadow-lg`}
               >
                 {isLoading ? (
                   <Skeleton className="w-24 h-24 rounded-full" />
                 ) : (
-                  user?.name?.charAt(0).toUpperCase() || 'U'
+                  formData?.name?.charAt(0).toUpperCase() || user?.name?.charAt(0).toUpperCase() || 'U'
                 )}
               </motion.div>
               <div className="text-center md:text-left">
@@ -214,7 +303,7 @@ export default function ProfilePage() {
                   {isLoading ? (
                     <Skeleton className="h-8 w-48" />
                   ) : (
-                    formData.name
+                    formData.name || 'Kullanıcı'
                   )}
                 </motion.h1>
                 <motion.div 
@@ -234,6 +323,15 @@ export default function ProfilePage() {
                         <Phone size={16} />
                         <span>{formData.phone}</span>
                       </div>
+                      {preferences.showAddress && (
+                        <>
+                          <div className="hidden sm:block text-blue-200">|</div>
+                          <div className="flex items-center gap-1">
+                            <MapPin size={16} />
+                            <span>{formData.address}</span>
+                          </div>
+                        </>
+                      )}
                     </>
                   )}
                 </motion.div>
@@ -257,23 +355,14 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Profile Content */}
-          <Tabs defaultValue="profile" className="p-4 sm:p-6">
-            <TabsList className="grid grid-cols-3 max-w-md mx-auto mb-8">
-              <TabsTrigger value="profile" className="flex items-center gap-2">
-                <User size={16} />
-                <span className="hidden sm:inline">Profil</span>
-              </TabsTrigger>
-              <TabsTrigger value="favorites" className="flex items-center gap-2">
-                <Heart size={16} />
-                <span className="hidden sm:inline">Favoriler</span>
-              </TabsTrigger>
-              <TabsTrigger value="preferences" className="flex items-center gap-2">
-                <Palette size={16} />
-                <span className="hidden sm:inline">Tercihler</span>
-              </TabsTrigger>
+          {/* Tabs section */}
+          <Tabs defaultValue="profile" className="p-6">
+            <TabsList className="grid grid-cols-3 mb-8">
+              <TabsTrigger value="profile">Profil</TabsTrigger>
+              <TabsTrigger value="favorites">Favoriler</TabsTrigger>
+              <TabsTrigger value="customize">Özelleştir</TabsTrigger>
             </TabsList>
-
+            
             {/* Profile Tab */}
             <TabsContent value="profile">
               <motion.div
@@ -298,8 +387,15 @@ export default function ProfilePage() {
                             className="w-full"
                           />
                         ) : (
-                          <div className="py-2 px-3 bg-gray-100 dark:bg-gray-700 rounded-md">
-                            {formData.name}
+                          <div className="py-2 px-3 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-between">
+                            <span>{formData.name}</span>
+                            <button
+                              type="button"
+                              onClick={() => setIsEditing(true)}
+                              className="text-sm text-blue-500 hover:text-blue-600"
+                            >
+                              Düzenle
+                            </button>
                           </div>
                         )}
                       </div>
@@ -318,8 +414,15 @@ export default function ProfilePage() {
                             className="w-full"
                           />
                         ) : (
-                          <div className="py-2 px-3 bg-gray-100 dark:bg-gray-700 rounded-md">
-                            {formData.email}
+                          <div className="py-2 px-3 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-between">
+                            <span>{formData.email}</span>
+                            <button
+                              type="button"
+                              onClick={() => setIsEditing(true)}
+                              className="text-sm text-blue-500 hover:text-blue-600"
+                            >
+                              Düzenle
+                            </button>
                           </div>
                         )}
                       </div>
@@ -337,8 +440,15 @@ export default function ProfilePage() {
                             className="w-full"
                           />
                         ) : (
-                          <div className="py-2 px-3 bg-gray-100 dark:bg-gray-700 rounded-md">
-                            {formData.phone}
+                          <div className="py-2 px-3 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-between">
+                            <span>{formData.phone}</span>
+                            <button
+                              type="button"
+                              onClick={() => setIsEditing(true)}
+                              className="text-sm text-blue-500 hover:text-blue-600"
+                            >
+                              Düzenle
+                            </button>
                           </div>
                         )}
                       </div>
@@ -356,9 +466,18 @@ export default function ProfilePage() {
                             className="w-full"
                           />
                         ) : (
-                          <div className="py-2 px-3 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center gap-2">
-                            <MapPin size={16} className="text-gray-500 dark:text-gray-400" />
-                            {formData.address}
+                          <div className="py-2 px-3 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <MapPin size={16} className="text-gray-500 dark:text-gray-400" />
+                              <span>{formData.address}</span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => setIsEditing(true)}
+                              className="text-sm text-blue-500 hover:text-blue-600"
+                            >
+                              Düzenle
+                            </button>
                           </div>
                         )}
                       </div>
@@ -375,9 +494,9 @@ export default function ProfilePage() {
                           <X size={16} />
                           İptal
                         </Button>
-                        <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white gap-2">
+                        <Button type="submit" className={`bg-${preferences.primaryColor}-600 hover:bg-${preferences.primaryColor}-700 text-white gap-2`}>
                           <Save size={16} />
-                          Kaydet
+                          Tümünü Kaydet
                         </Button>
                       </div>
                     )}
@@ -385,7 +504,7 @@ export default function ProfilePage() {
                 </motion.div>
               </motion.div>
             </TabsContent>
-
+            
             {/* Favorites Tab */}
             <TabsContent value="favorites">
               <motion.div
@@ -489,104 +608,141 @@ export default function ProfilePage() {
                 )}
               </motion.div>
             </TabsContent>
-
-            {/* Preferences Tab */}
-            <TabsContent value="preferences">
+            
+            {/* Customize Tab - New */}
+            <TabsContent value="customize">
               <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="space-y-8 max-w-2xl mx-auto"
+                className="space-y-8"
               >
-                <motion.h2 
-                  variants={itemVariants}
-                  className="text-xl font-semibold text-gray-800 dark:text-white mb-6"
-                >
-                  Kullanıcı Tercihleri
-                </motion.h2>
-
-                <motion.div variants={itemVariants} className="space-y-6">
-                  <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-sm border border-gray-200 dark:border-gray-600">
-                    <h3 className="font-medium text-gray-800 dark:text-white mb-4 flex items-center gap-2">
-                      <Palette size={18} className="text-blue-500" />
-                      Görünüm Ayarları
-                    </h3>
-                    
-                    <div className="space-y-4">
+                <motion.div variants={itemVariants}>
+                  <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">
+                    Görünüm Ayarları
+                  </h3>
+                  
+                  {/* Colors */}
+                  <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Tema Rengi
+                    </label>
+                    <div className="flex flex-wrap gap-3">
+                      {colorOptions.map(color => (
+                        <button
+                          key={color.id}
+                          onClick={() => handlePreferenceChange('primaryColor', color.id)}
+                          className={`w-8 h-8 rounded-full ${color.class} flex items-center justify-center ${
+                            preferences.primaryColor === color.id 
+                              ? 'ring-2 ring-offset-2 ring-gray-500 dark:ring-gray-300' 
+                              : ''
+                          }`}
+                          title={color.name}
+                        >
+                          {preferences.primaryColor === color.id && (
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white" className="w-4 h-4">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Font Size */}
+                  <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Yazı Boyutu
+                    </label>
+                    <div className="flex gap-3">
+                      {fontSizeOptions.map(size => (
+                        <button
+                          key={size.id}
+                          onClick={() => handlePreferenceChange('fontSize', size.id)}
+                          className={`px-4 py-2 rounded-md border ${
+                            preferences.fontSize === size.id
+                              ? `bg-${preferences.primaryColor}-100 dark:bg-${preferences.primaryColor}-900 border-${preferences.primaryColor}-500 text-${preferences.primaryColor}-700 dark:text-${preferences.primaryColor}-300`
+                              : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
+                          }`}
+                        >
+                          <span className={size.class}>{size.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+                
+                <motion.div variants={itemVariants}>
+                  <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">
+                    Bildirim Ayarları
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Tema</p>
-                        <div className="flex items-center justify-between">
-                          <div className="text-sm text-gray-700 dark:text-gray-300">
-                            Temayı değiştirmek için modunu seçin
-                          </div>
-                          <ModeToggle />
-                        </div>
+                        <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Uygulama Bildirimleri</h4>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Kampanya ve fırsatlardan haberdar olun</p>
                       </div>
+                      <Button 
+                        variant="outline"
+                        onClick={() => handlePreferenceChange('notifications', !preferences.notifications)}
+                        className={`${
+                          preferences.notifications 
+                            ? `bg-${preferences.primaryColor}-100 dark:bg-${preferences.primaryColor}-900 text-${preferences.primaryColor}-700 dark:text-${preferences.primaryColor}-300 border-${preferences.primaryColor}-500` 
+                            : ''
+                        }`}
+                      >
+                        {preferences.notifications ? 'Açık' : 'Kapalı'}
+                      </Button>
                     </div>
-                  </div>
-
-                  <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-sm border border-gray-200 dark:border-gray-600">
-                    <h3 className="font-medium text-gray-800 dark:text-white mb-4 flex items-center gap-2">
-                      <Bell size={18} className="text-blue-500" />
-                      Bildirim Ayarları
-                    </h3>
                     
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-600">
-                        <div>
-                          <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Uygulama Bildirimleri</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">Önemli güncellemeler ve ürün bildirimleri</p>
-                        </div>
-                        <Button 
-                          onClick={() => togglePreference('notifications')} 
-                          variant="ghost" 
-                          size="icon"
-                          className={preferences.notifications ? 'text-blue-500' : 'text-gray-400'}
-                        >
-                          {preferences.notifications ? <Bell size={20} /> : <Bell size={20} className="line-through opacity-70" />}
-                        </Button>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">E-posta Bildirimleri</h4>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">E-posta ile bildirim almak istiyorum</p>
                       </div>
-                      
-                      <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-600">
-                        <div>
-                          <p className="text-sm font-medium text-gray-700 dark:text-gray-300">E-posta Güncellemeleri</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">Kampanyalar ve özel teklifler</p>
-                        </div>
-                        <Button 
-                          onClick={() => togglePreference('emailUpdates')} 
-                          variant="ghost" 
-                          size="icon"
-                          className={preferences.emailUpdates ? 'text-blue-500' : 'text-gray-400'}
-                        >
-                          {preferences.emailUpdates ? <Mail size={20} /> : <Mail size={20} className="line-through opacity-70" />}
-                        </Button>
-                      </div>
+                      <Button 
+                        variant="outline"
+                        onClick={() => handlePreferenceChange('emailUpdates', !preferences.emailUpdates)}
+                        className={`${
+                          preferences.emailUpdates 
+                            ? `bg-${preferences.primaryColor}-100 dark:bg-${preferences.primaryColor}-900 text-${preferences.primaryColor}-700 dark:text-${preferences.primaryColor}-300 border-${preferences.primaryColor}-500` 
+                            : ''
+                        }`}
+                      >
+                        {preferences.emailUpdates ? 'Açık' : 'Kapalı'}
+                      </Button>
                     </div>
-                  </div>
-
-                  <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-sm border border-gray-200 dark:border-gray-600">
-                    <h3 className="font-medium text-gray-800 dark:text-white mb-4 flex items-center gap-2">
-                      <User size={18} className="text-blue-500" />
-                      Gizlilik Ayarları
-                    </h3>
                     
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between py-2">
-                        <div>
-                          <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Adres Bilgisini Göster</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">Profilinizde adres bilgilerinizin görünürlüğü</p>
-                        </div>
-                        <Button 
-                          onClick={() => togglePreference('showAddress')} 
-                          variant="ghost" 
-                          size="icon"
-                          className={preferences.showAddress ? 'text-blue-500' : 'text-gray-400'}
-                        >
-                          {preferences.showAddress ? <Eye size={20} /> : <EyeOff size={20} />}
-                        </Button>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Profilde Adres Göster</h4>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Profilimde adresimin görünmesine izin ver</p>
                       </div>
+                      <Button 
+                        variant="outline"
+                        onClick={() => handlePreferenceChange('showAddress', !preferences.showAddress)}
+                        className={`${
+                          preferences.showAddress 
+                            ? `bg-${preferences.primaryColor}-100 dark:bg-${preferences.primaryColor}-900 text-${preferences.primaryColor}-700 dark:text-${preferences.primaryColor}-300 border-${preferences.primaryColor}-500` 
+                            : ''
+                        }`}
+                      >
+                        {preferences.showAddress ? 'Açık' : 'Kapalı'}
+                      </Button>
                     </div>
                   </div>
+                </motion.div>
+                
+                <motion.div variants={itemVariants} className="pt-4">
+                  <Button 
+                    onClick={() => {
+                      localStorage.setItem('userPreferences', JSON.stringify(preferences))
+                      toast.success('Tüm ayarlarınız kaydedildi')
+                    }}
+                    className={`bg-${preferences.primaryColor}-600 hover:bg-${preferences.primaryColor}-700 text-white`}
+                  >
+                    Tüm Ayarları Kaydet
+                  </Button>
                 </motion.div>
               </motion.div>
             </TabsContent>

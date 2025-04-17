@@ -5,6 +5,7 @@ import { FavoritesProvider } from './context/FavoritesContext'
 import { AuthProvider } from './context/AuthContext'
 import { Toaster } from 'sonner'
 import { Inter } from 'next/font/google'
+import DemoBanner from './components/DemoBanner'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -12,8 +13,21 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Rulman Merkezi',
-  description: 'Türkiye\'nin En Kaliteli Rulman Satıcısı',
+  title: 'Rulman Merkezi | Endüstriyel Ürünler Demo',
+  description: 'Endüstriyel rulmanlar, kaplinler, bağlantı elemanları ve daha fazlası. Modern e-ticaret deneyimi ile kaliteli ürünlere ulaşın.',
+  keywords: 'rulman, rulman çeşitleri, endüstriyel malzeme, kaplin, bağlantı elemanları, e-ticaret, demo',
+  authors: [{ name: 'Rulman Merkezi Demo' }],
+  creator: 'Rulman Merkezi Demo Ekibi',
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: 'website',
+    title: 'Rulman Merkezi | Endüstriyel Ürünler Demo',
+    description: 'Modern Next.js e-ticaret deneyimi ile kaliteli endüstriyel ürünlere ulaşın.',
+    siteName: 'Rulman Merkezi Demo',
+  },
 }
 
 export default function RootLayout({
@@ -22,12 +36,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="tr">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
             <FavoritesProvider>
               <Toaster position="top-center" />
+              <DemoBanner />
               {children}
             </FavoritesProvider>
           </AuthProvider>

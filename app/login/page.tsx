@@ -250,11 +250,23 @@ export default function LoginPage() {
         </div>
 
         <div className="border-t border-gray-200 dark:border-gray-700 mt-6 pt-6">
-          <div className="text-sm text-center text-gray-500 dark:text-gray-400">
-            <p>Demo Hesapları:</p>
-            <div className="mt-2">
-              <p><span className="font-medium">Kullanıcı:</span> user@example.com / user123</p>
+          <div className="text-center space-y-2">
+            <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Demo Hesap Bilgileri:</p>
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-lg p-3 mx-auto max-w-xs">
+              <div className="space-y-1 text-sm">
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600 dark:text-gray-300">E-posta:</span>
+                  <code className="bg-white dark:bg-gray-800 px-2 py-0.5 rounded text-blue-600 dark:text-blue-400 font-mono">admin@example.com</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600 dark:text-gray-300">Şifre:</span>
+                  <code className="bg-white dark:bg-gray-800 px-2 py-0.5 rounded text-blue-600 dark:text-blue-400 font-mono">admin123</code>
+                </div>
+              </div>
             </div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              Bu demo hesap ile sistemin tüm özelliklerini test edebilirsiniz.
+            </p>
           </div>
         </div>
       </motion.div>

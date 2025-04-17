@@ -1,30 +1,20 @@
-import Image from 'next/image'
 import React from 'react'
+import { FavoritesProvider } from '../context/FavoritesContext'
 
 interface AuthLayoutProps {
-    children: React.ReactNode
+  children: React.ReactNode
 }
+
 const AuthLayout = ({ children }: AuthLayoutProps) => {
-    return (
-        <div className='flex flex-row items-center justify-center space-x-14'>
-            <div className='hidden lg:block lg:w-2/5 h-screen'>
-                <Image
-                    alt="logo"
-                    src={'/login.jpg'}
-                    width={1080}
-                    height={1920}
-                    className='w-full h-screen object-cover brightness-[.7]'
-
-                />
-
-            </div>
-
-            <div className='w-3/5'>
-                {children}
-            </div>
-
-        </div>
-    )
+  return (
+    <div className='min-h-screen flex items-center justify-center bg-[#1a1f2b] p-4'>
+      <div className='w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl backdrop-blur-md shadow-2xl rounded-3xl p-8'>
+        <FavoritesProvider> 
+          {children}
+        </FavoritesProvider>
+      </div>
+    </div>
+  )
 }
 
 export default AuthLayout

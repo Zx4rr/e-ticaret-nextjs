@@ -15,34 +15,33 @@ export default {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
-			  	mycolor1:"#1D1616",
-			  	mycolor2:"#8E1616",
-			  	mycolor3:"#D84040",
-			  	mycolor4:"#EEEEEE",
-			  	mycolor5:"#A8DADC",
-			  	mycolor6:"#457B9D",
-			  	mycolor7:"#1D3557",
-			  	mycolor8:"#FF6F61",
-			  	mycolor9:"#6B5B95",
-			  	mycolor10:"#A6A6A6",
-				mycolor11 : "#D72638",
-				mycolor12 : "#EB7532",
-				mycolor13 : "#F7D038",
-				mycolor14 : "#3C91E6",
-				mycolor15 : "#46B1C9",
-				mycolor16 : "#2D6A4F",
-				mycolor17 : "#1B4965",
-				mycolor18 : "#008F8C",
-				mycolor19 : "#6A0572",
-				mycolor20 : "#D90368",
-				mycolor21 : "#F72585",
-				mycolor22 : "#4F5D75",
-				mycolor23 : "#2C363F",
-				mycolor24 : "#1E1E24",
-				mycolor25 : "#F8F9FA",
-				mycolor26 : "#fbc439",
-				mycolor27 : "#251a58",
-
+  			mycolor1: '#1D1616',
+  			mycolor2: '#8E1616',
+  			mycolor3: '#D84040',
+  			mycolor4: '#EEEEEE',
+  			mycolor5: '#A8DADC',
+  			mycolor6: '#457B9D',
+  			mycolor7: '#1D3557',
+  			mycolor8: '#FF6F61',
+  			mycolor9: '#6B5B95',
+  			mycolor10: '#A6A6A6',
+  			mycolor11: '#D72638',
+  			mycolor12: '#EB7532',
+  			mycolor13: '#F7D038',
+  			mycolor14: '#3C91E6',
+  			mycolor15: '#46B1C9',
+  			mycolor16: '#2D6A4F',
+  			mycolor17: '#1B4965',
+  			mycolor18: '#008F8C',
+  			mycolor19: '#6A0572',
+  			mycolor20: '#D90368',
+  			mycolor21: '#F72585',
+  			mycolor22: '#4F5D75',
+  			mycolor23: '#2C363F',
+  			mycolor24: '#1E1E24',
+  			mycolor25: '#F8F9FA',
+  			mycolor26: '#fbc439',
+  			mycolor27: '#251a58',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -86,6 +85,28 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		keyframes: {
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			}
+  		},
+  		animation: {
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
   		}
   	}
   },

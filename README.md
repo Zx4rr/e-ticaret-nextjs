@@ -1,4 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# E-Ticaret Next.js Projesi
+
+Modern ve yüksek performanslı bir e-ticaret çözümü.
+
+## İletişim Formu Kurulumu
+
+Proje içinde yer alan iletişim formu, e-posta gönderimi için Resend API'yi kullanmaktadır. Gerçek e-posta gönderimini etkinleştirmek için şu adımları izleyin:
+
+1. [Resend.com](https://resend.com) adresinde ücretsiz bir hesap oluşturun
+   - Ücretsiz plan günlük 100 e-posta gönderme hakkı sunar
+   - Kredi kartı gerektirmez
+
+2. Resend hesabınızdan bir API anahtarı oluşturun
+   - Dashboard > API Keys > Create API Key
+   
+3. Oluşturduğunuz API anahtarını projenizin `.env.local` dosyasına ekleyin:
+   ```
+   RESEND_API_KEY="re_sizinApiAnahtariniz"
+   CONTACT_EMAIL="sizin@email.com"
+   ```
+
+4. (İsteğe bağlı) Kendi alan adınızı ekleyin:
+   - Resend Dashboard > Domains > Add Domain adımlarını izleyin
+   - Alan adınızı doğrulayın ve `.env.local` dosyasına ekleyin:
+   ```
+   RESEND_DOMAIN="alanadi.com"
+   ```
+
+Not: API anahtarı eklemezseniz, form yine de çalışır ancak gerçek e-posta gönderilmez (test modu).
 
 ## Getting Started
 

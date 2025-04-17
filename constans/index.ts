@@ -159,85 +159,236 @@ export const CarouselList: CarouselType[] = [
   },
 ]
 
-export interface ProductType{
+// Genel ürün tipi tanımı
+export interface ProductType {
   id: number;
   title: string;
   description: string;
   image: string;
-};
+  rating?: number;
+  reviewCount?: number;
+}
 
-export const products: ProductType[] = [
+// Rulman ürünleri
+export const rulmanProducts: ProductType[] = [
   {
     id: 1,
     title: '1100-XL-KRR-B-2C-L285/70-OSE',
-
     description: 'Radial insert ball bearing',
     image: '/products/rulman1.png',
+    rating: 4.5,
+    reviewCount: 12
   },
   {
     id: 2,
     title: '11204-TVH',
     description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
     image: '/products/rulman2.png',
+    rating: 3.8,
+    reviewCount: 8
   },
   {
     id: 3,
     title: '11205-TVH',
     description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
     image: '/products/rulman3.png',
+    rating: 4.2,
+    reviewCount: 15
   },
   {
     id: 4,
     title: '11206-TVH',
     description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
     image: '/products/rulman4.png',
+    rating: 5.0,
+    reviewCount: 7
   },
   {
     id: 5,
     title: '11207-TVH',
     description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
     image: '/products/rulman5.png',
+    rating: 4.7,
+    reviewCount: 22
   },
   {
     id: 6,
     title: '11208-TVH',
     description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
     image: '/products/rulman6.png',
+    rating: 3.5,
+    reviewCount: 11
   },
   {
     id: 7,
     title: '11209-TVH',
     description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
     image: '/products/rulman7.png',
+    rating: 4.1,
+    reviewCount: 9
   },
   {
     id: 8,
     title: '11210-TVH',
     description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
     image: '/products/rulman8.png',
+    rating: 4.3,
+    reviewCount: 16
   },
   {
     id: 9,
     title: 'Product Nine',
     description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
     image: '/products/rulman9.png',
+    rating: 3.9,
+    reviewCount: 14
   },
   {
     id: 10,
     title: 'Product Ten',
     description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
     image: '/products/rulman10.png',
+    rating: 4.6,
+    reviewCount: 13
   },
   {
     id: 11,
     title: 'Product Eleven',
     description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
     image: '/products/rulman11.png',
+    rating: 3.2,
+    reviewCount: 6
   },
   {
     id: 12,
     title: 'Product Twelve',
     description: 'Self-aligning ball bearing 112..-TVH, plastic cage',
     image: '/products/rulman12.png',
+    rating: 4.8,
+    reviewCount: 19
+  }
+];
+
+// Zincir-Dişli Ürünleri
+export const zincirDisliProducts: ProductType[] = [
+  {
+    id: 101,
+    title: '5M * 15 TRİGER KASNAK – METRİK HATVELİ HTD',
+    description: 'Ağır hizmet tipi endüstriyel zincir dişli sistemi, yüksek dayanıklılık ve verimli güç aktarımı.',
+    image: '/products/zincirdisli1.jpg',
   },
+  {
+    id: 102,
+    title: '8M * 30 TRİGER KASNAK – METRİK HATVELİ HTD',
+    description: 'Özel ısıl işlem görmüş çelik malzemeden üretilmiş, aşınma direnci yüksek zincir dişli.',
+    image: '/products/zincirdisli2.jpg',
+  },
+  {
+    id: 103,
+    title: 'Paslanmaz Zincir Dişli Z-305',
+    description: 'Gıda ve kimya endüstrisi için paslanmaz çelikten üretilmiş zincir dişli sistemi.',
+    image: '/products/zincirdisli3.jpg',
+  },
+  {
+    id: 104,
+    title: 'Konveyör Zincir Dişli Seti',
+    description: 'Konveyör sistemlerinde kullanım için özel tasarlanmış yüksek performanslı zincir dişli seti.',
+    image: '/products/zincirdisli4.jpg',
+  },
+  {
+    id: 105,
+    title: 'Çift Sıralı Zincir Dişli',
+    description: 'Çift sıralı zincirler için tasarlanmış, ağır yük taşıma kapasitesine sahip endüstriyel dişli.',
+    image: '/products/zincirdisli5.jpg',
+  },
+  {
+    id: 106,
+    title: 'Hassas Zincir Dişli Mekanizması',
+    description: 'Hassas mühendislik gerektiren uygulamalar için özel üretim zincir dişli mekanizması.',
+    image: '/products/zincirdisli6.jpg',
+  },
+  {
+    id: 107,
+    title: 'Otomotiv Zincir Dişli Sistemi',
+    description: 'Otomotiv endüstrisi için yüksek dayanıklılık ve performans sunan zincir dişli sistemi.',
+    image: '/products/zincirdisli7.jpg',
+  },
+  {
+    id: 108,
+    title: 'Endüstriyel Transmisyon Zinciri',
+    description: 'Fabrika ve üretim hatları için tasarlanmış uzun ömürlü transmisyon zinciri.',
+    image: '/products/zincirdisli8.jpg',
+  },
+  {
+    id: 109,
+    title: 'Ağır Hizmet Zincir Dişli Z-500',
+    description: 'Madencilik ve inşaat ekipmanlarında kullanım için geliştirilmiş ultra dayanıklı zincir dişli.',
+    image: '/products/zincirdisli9.jpg',
+  },
+  {
+    id: 110,
+    title: 'Kompakt Zincir Dişli Sistemi',
+    description: 'Sınırlı alanlarda maksimum performans için tasarlanmış kompakt zincir dişli çözümü.',
+    image: '/products/zincirdisli10.jpg',
+  }
+];
+
+// Kaplin Ürünleri
+export const kaplinProducts: ProductType[] = [
+  {
+    id: 201,
+    title: 'Esnek Kaplin K-100',
+    description: 'Titreşim sönümleme özelliğine sahip esnek kaplin, hassas hizalama gerektirmeyen ekipmanlar için ideal.',
+    image: '/products/kaplin.jpg',
+  },
+  {
+    id: 202,
+    title: 'Endüstriyel Disk Kaplin',
+    description: 'Yüksek tork iletimi sağlayan, bakım gerektirmeyen disk kaplin sistemi.',
+    image: '/products/kaplin2.jpg',
+  },
+  {
+    id: 203,
+    title: 'Dişli Kaplin Mekanizması',
+    description: 'Ağır hizmet uygulamaları için dişli kaplin, yüksek tork ve geniş çalışma sıcaklık aralığı sunar.',
+    image: '/products/kaplin3.jpg',
+  },
+  {
+    id: 204,
+    title: 'Zincir Kaplin Sistemi',
+    description: 'Endüstriyel güç aktarımında kullanılan, kolay montaj ve demontaj özelliğine sahip zincir kaplin.',
+    image: '/products/kaplin4.jpg',
+  },
+  {
+    id: 205,
+    title: 'Hidrolik Kaplin H-500',
+    description: 'Hidrolik sistemlerde kullanım için özel tasarlanmış, basınca dayanıklı kaplin çözümü.',
+    image: '/products/kaplin5.jpg',
+  }
+];
+export const baglantiElemanlari: ProductType[] = [
+  {
+    id: 201,
+    title: 'Akb Civatalar',
+    description: 'Titreşim sönümleme özelliğine sahip esnek kaplin, hassas hizalama gerektirmeyen ekipmanlar için ideal.',
+    image: '/products/anahtarbasli.jpg',
+  },
+  {
+    id: 202,
+    title: 'İmbus Civata',
+    description: 'Yüksek tork iletimi sağlayan, bakım gerektirmeyen disk kaplin sistemi.',
+    image: '/products/anahtar-basli.jpg',
+  }
+];
+
+// Zincir-Dişli-Kaplin kategorisi için birleştirilmiş ürünler
+export const zincirDisliKaplinProducts: ProductType[] = [
+  ...zincirDisliProducts,
+  ...kaplinProducts
+];
+
+// Eski genel ürün listesi (geriye dönük uyumluluk için)
+export const products: ProductType[] = [
+  ...rulmanProducts,
+  ...zincirDisliKaplinProducts
 ];
